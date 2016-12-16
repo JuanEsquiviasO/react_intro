@@ -20,19 +20,57 @@
 			);
 		}
 
-		ReactDOM.render(
-			<Hola name="Fokker" />,
-			document.getElementById('app')
-		);
+		class MiComponente extends React.PureComponent {
+			constructor(props) {
+				super(props);
 
-		setTimeout(
-			() => {
-				ReactDOM.render(
-			<Hola name="Fokker!" />,
-					document.getElementById('app')
+				this.state = {
+					count: 0,
+				};
+
+				this.handleClick = this.handleClick.bind(this);
+			}
+
+			handleClick() {
+				this.setState({
+					count: this.state.count + 1,
+				});
+			}
+
+			render() {
+				const name = this.props.name;
+				return (
+					<h1 id="Title" onClick={this.handleClick}>
+						Hola {name} {this.state.count}
+					</h1>
 				);
+			}
+		}
+
+		const OtroComponent = React.createClass({
+			getInitialState() {
+				return {
+					count: 0
+				};
 			},
-			1000
+			handleClick() {
+				this.setState({
+					count: this.state.count + 1,
+				});
+			},
+			render() {
+				const name = this.props.name;
+				return (
+					<h1 id="Title" onClick={this.handleClick}>
+						Hola {name} {this.state.count}
+					</h1>
+				);
+			}
+		});
+
+		ReactDOM.render(
+			<OtroComponent name="Fokker" />,
+			document.getElementById('app')
 		);
 	</script>
 </body>
