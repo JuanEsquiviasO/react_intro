@@ -1,77 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+  <meta charset="UTF-8">
+  <title>Document</title>
 </head>
 <body>
-	<main id="app"></main>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
-	<script type="text/babel">
-		function Hola(props) {
-			const name = props.name;
+  <main id="app"></main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+  <script type="text/babel">
+    function Hola(props) {
+      return (
+        <h1 id="Title" onClick={props.onClick}>
+          Hola {props.name} {props.count}
+        </h1>
+      );
+    }
 
-			return (
-				<h1 id="Title">
-					Hola {name}
-				</h1>
-			);
-		}
+    class MiComponente extends React.Component {
+      constructor(props) {
+        super(props);
 
-		class MiComponente extends React.PureComponent {
-			constructor(props) {
-				super(props);
+        this.state = {
+          count: 0,
+        };
 
-				this.state = {
-					count: 0,
-				};
+        this.handleClick = this.handleClick.bind(this);
+      }
 
-				this.handleClick = this.handleClick.bind(this);
-			}
+      handleClick() {
+        this.setState({
+          count: this.state.count + 1,
+        });
+      }
 
-			handleClick() {
-				this.setState({
-					count: this.state.count + 1,
-				});
-			}
+      render() {
+        return (
+          <Hola
+            name={this.props.name}
+            count={this.state.count}
+            onClick={this.handleClick}
+          />
+        );
+      }
+    }
 
-			render() {
-				const name = this.props.name;
-				return (
-					<h1 id="Title" onClick={this.handleClick}>
-						Hola {name} {this.state.count}
-					</h1>
-				);
-			}
-		}
-
-		const OtroComponent = React.createClass({
-			getInitialState() {
-				return {
-					count: 0
-				};
-			},
-			handleClick() {
-				this.setState({
-					count: this.state.count + 1,
-				});
-			},
-			render() {
-				const name = this.props.name;
-				return (
-					<h1 id="Title" onClick={this.handleClick}>
-						Hola {name} {this.state.count}
-					</h1>
-				);
-			}
-		});
-
-		ReactDOM.render(
-			<OtroComponent name="Fokker" />,
-			document.getElementById('app')
-		);
-	</script>
+    ReactDOM.render(
+      <MiComponente name="Fokker" />,
+      document.getElementById('app')
+    );
+  </script>
 </body>
 </html>
