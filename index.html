@@ -10,13 +10,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
   <script type="text/babel">
-    function Hola(props) {
+    function Hola(props, context) {
       return (
 				<h1 id="Title" onClick={props.onClick} onMouseEnter={props.onMouseEnter}>
-          Hola {props.name} {props.count}
+          Hola {props.name} {context.count}
         </h1>
       );
     }
+
+		Hola.contextTypes = {
+			count: React.PropTypes.number
+		};
 
     class MiComponente extends React.Component {
       constructor(props) {
@@ -28,6 +32,12 @@
 
         this.handleClick = this.handleClick.bind(this);
       }
+
+			getChildContext() {
+				return {
+					count: this.state.count,
+				}
+			}
 
 			componentWillMount() {
 				console.log('el componente se va a montar');
@@ -76,6 +86,10 @@
         );
       }
     }
+
+		MiComponente.childContextTypes = {
+			count: React.PropTypes.number,
+		};
 
     ReactDOM.render(
       <MiComponente name="Fokker" />,
